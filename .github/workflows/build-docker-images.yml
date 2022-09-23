@@ -20,6 +20,7 @@ concurrency:
 jobs:
   latest-docker:
     name: "Latest PyTorch + TensorFlow [dev]"
+    if: inputs.image_postfix != ''
     runs-on: ubuntu-latest
     steps:
       -
