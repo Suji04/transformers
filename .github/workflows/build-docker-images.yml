@@ -6,6 +6,10 @@ on:
       - docker-image*
   repository_dispatch:
   workflow_call:
+    inputs:
+      image_postfix:
+        required: true
+        type: string
   schedule:
     - cron: "0 1 * * *"
 
@@ -30,6 +34,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      -
+        name: Determine image postfix
+        run:  echo ${{ inputs.image_postfix }}
       -
         name: Build and push
         uses: docker/build-push-action@v2
