@@ -35,9 +35,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       -
-        name: Determine image postfix
-        run:  echo ${{ inputs.image_postfix }}
-      -
         name: Build and push
         uses: docker/build-push-action@v2
         with:
@@ -45,7 +42,7 @@ jobs:
           build-args: |
             REF=main
           push: true
-          tags: huggingface/transformers-all-latest-gpu
+          tags: huggingface/transformers-all-latest-gpu${{ inputs.image_postfix }}
 
   latest-with-torch-nightly-docker:
     name: "Nightly PyTorch + Stable TensorFlow"
@@ -72,7 +69,7 @@ jobs:
             REF=main
             PYTORCH=pre
           push: true
-          tags: huggingface/transformers-all-latest-torch-nightly-gpu
+          tags: huggingface/transformers-all-latest-torch-nightly-gpu${{ inputs.image_postfix }}
 
   latest-torch-deepspeed-docker:
     name: "Latest PyTorch + DeepSpeed"
@@ -98,7 +95,7 @@ jobs:
           build-args: |
             REF=main
           push: true
-          tags: huggingface/transformers-pytorch-deepspeed-latest-gpu
+          tags: huggingface/transformers-pytorch-deepspeed-latest-gpu${{ inputs.image_postfix }}
 
   nightly-torch-deepspeed-docker:
     name: "Nightly PyTorch + DeepSpeed"
@@ -124,7 +121,7 @@ jobs:
           build-args: |
             REF=main
           push: true
-          tags: huggingface/transformers-pytorch-deepspeed-nightly-gpu
+          tags: huggingface/transformers-pytorch-deepspeed-nightly-gpu${{ inputs.image_postfix }}
 
   doc-builder:
     name: "Doc builder"
@@ -148,7 +145,7 @@ jobs:
         with:
           context: ./docker/transformers-doc-builder
           push: true
-          tags: huggingface/transformers-doc-builder
+          tags: huggingface/transformers-doc-builder${{ inputs.image_postfix }}
 
   latest-pytorch:
     name: "Latest PyTorch [dev]"
@@ -174,7 +171,7 @@ jobs:
           build-args: |
             REF=main
           push: true
-          tags: huggingface/transformers-pytorch-gpu
+          tags: huggingface/transformers-pytorch-gpu${{ inputs.image_postfix }}
 
   latest-tensorflow:
     name: "Latest TensorFlow [dev]"
@@ -200,4 +197,4 @@ jobs:
           build-args: |
             REF=main
           push: true
-          tags: huggingface/transformers-tensorflow-gpu
+          tags: huggingface/transformers-tensorflow-gpu${{ inputs.image_postfix }}
