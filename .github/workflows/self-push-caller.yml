@@ -4,7 +4,7 @@ name: Self-hosted runner (push-caller)
 on:
   push:
     branches:
-      - main
+      - run_separate_ci_images
     paths:
       - "src/**"
       - "tests/**"
@@ -43,12 +43,3 @@ jobs:
     with:
       image_postfix: "-push-ci"
     secrets: inherit
-
-  run_push_ci:
-    name: Trigger Push CI
-    runs-on: ubuntu-latest
-    if: ${{ always() }}
-    needs: build-docker-containers
-    steps:
-      - name: Trigger push CI via workflow_run
-        run: echo "Trigger push CI via workflow_run"
